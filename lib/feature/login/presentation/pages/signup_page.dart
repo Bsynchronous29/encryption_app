@@ -17,14 +17,30 @@ class _SignUpPageState extends State<SignUpPage> {
   final JsonStorage _jsonDatabase = JsonStorage();
 
   void _signup() async {
+    final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    if (email.isNotEmpty && password.isNotEmpty) {
-      final userData = {'email': email, 'password': password};
+    if (username.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
+      final userData = {
+        'email': email,
+        'username': username,
+        'password': password
+      };
 
       // Save to JSON database
       try {
+        final users = await _jsonDatabase.loadUsers();
+
+        final user = users.where((user) => user['email'] == email).toList();
+
+        if (user.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content:
+                  Text('User is already existing. Please try another user.')));
+          return;
+        }
+
         await _jsonDatabase.saveUser(userData);
 
         ScaffoldMessenger.of(context)

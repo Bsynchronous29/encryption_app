@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final JsonStorage _jsonDatabase = JsonStorage();
 
-  void login() async {
+  void _login() async {
     final email = _usernameController.text;
     final password = _passwordController.text;
 
@@ -31,8 +31,9 @@ class _LoginPageState extends State<LoginPage> {
       final users = await _jsonDatabase.loadUsers();
 
       final user = users.firstWhere((user) =>
-          user['email'].toString().contains(email) &&
-          user['password'].toString().contains(password));
+          (user['email'].toString() == email ||
+              user['username'].toString() == email) &&
+          user['password'].toString() == password);
 
       if (user != null) {
         Navigator.push(
@@ -141,9 +142,7 @@ class _LoginPageState extends State<LoginPage> {
           foregroundColor:
               const WidgetStatePropertyAll(Color.fromARGB(255, 17, 42, 47)),
         ),
-        onPressed: () {
-          login();
-        },
+        onPressed: _login,
         child: const Text('LOGIN'),
       ),
     );
