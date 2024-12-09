@@ -6,8 +6,9 @@ import 'package:encode_decode_app/feature/encode/presentation/providers/vigenere
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key, required this.cipher});
 
+  Cipher cipher;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -21,39 +22,111 @@ class _HomePageState extends State<HomePage> {
       TextEditingController();
 
   @override
+  void initState() {
+    _selectedCipher = widget.cipher;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${formatEnum(_selectedCipher)} Cipher'),
+        backgroundColor: Colors.lightBlue[200],
+        title: Text(
+          '${formatEnum(_selectedCipher)} Cipher'.toUpperCase(),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        color: Colors.lightBlue[200],
         child: Column(
           children: [
-            _buildCipherChips(),
-            CustomTextBox(
-              label: 'Text',
-              controller: _textEditingController,
-              labelStyle: const TextStyle(color: Colors.black),
-            ),
-            if (_selectedCipher != Cipher.atbash)
-              CustomTextBox(
-                label: _selectedCipher != Cipher.caeser ? 'Key' : 'Shifts',
-                controller: _keyEditingController,
-                labelStyle: const TextStyle(color: Colors.black),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    CustomTextBox(
+                      label: 'Text',
+                      controller: _textEditingController,
+                      labelStyle: const TextStyle(color: Colors.black),
+                    ),
+                    if (_selectedCipher != Cipher.atbash)
+                      CustomTextBox(
+                        label:
+                            _selectedCipher != Cipher.caeser ? 'Key' : 'Shifts',
+                        controller: _keyEditingController,
+                        labelStyle: const TextStyle(color: Colors.black),
+                      ),
+                    CustomTextBox(
+                      readOnly: false,
+                      label: 'Result',
+                      controller: _resultEditingController,
+                      labelStyle: const TextStyle(color: Colors.black),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      width: 200,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                Color.fromARGB(255, 36, 82, 92),
+                              ),
+                              foregroundColor:
+                                  WidgetStatePropertyAll(Colors.white)),
+                          onPressed: () {
+                            _selectedEncryption = Encryption.encrypt;
+                            _convert();
+                          },
+                          child: const Text('ENCRYPT')),
+                    ),
+                    if (_selectedCipher != Cipher.atbash)
+                      Container(
+                        width: 200,
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Color.fromARGB(255, 36, 82, 92),
+                                ),
+                                foregroundColor:
+                                    WidgetStatePropertyAll(Colors.white)),
+                            onPressed: () {
+                              _selectedEncryption = Encryption.decrypt;
+                              _convert();
+                            },
+                            child: const Text('DECRYPT')),
+                      ),
+                  ],
+                ),
               ),
-            const SizedBox(height: 10),
-            if (_selectedCipher != Cipher.atbash) _buildEncryptionChips(),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: _convert, child: const Text('Show Message')),
-            const SizedBox(height: 10),
-            CustomTextBox(
-              readOnly: false,
-              label: 'Result',
-              controller: _resultEditingController,
-              labelStyle: const TextStyle(color: Colors.black),
+            ),
+            Container(
+              height: 100,
+              child: Stack(
+                children: [
+                  // First cloud
+                  Positioned(
+                    bottom: -100, // Position relative to the bottom
+                    left: -200, // Adjust horizontal position
+                    child: const Image(
+                      image: AssetImage('assets/clouds.png'),
+                      width: 400, // Adjust size
+                    ),
+                  ),
+                  // Second cloud
+                  Positioned(
+                    bottom: -100, // Position relative to the bottom
+                    left: 60, // Adjust horizontal position
+                    child: const Image(
+                      image: AssetImage('assets/clouds.png'),
+                      width: 400, // Adjust size
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -13,8 +13,10 @@ class CustomTextBox extends StatelessWidget {
     this.minLines = 1,
     this.readOnly = false,
     this.labelStyle,
+    this.initialValue,
   });
 
+  String? initialValue;
   Widget? prefixIcon;
   String label;
   bool obscureText = false;
@@ -42,6 +44,7 @@ class CustomTextBox extends StatelessWidget {
             ),
           ),
           TextFormField(
+            initialValue: initialValue,
             readOnly: readOnly,
             controller: controller,
             obscureText: obscureText,

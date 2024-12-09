@@ -55,49 +55,55 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           Expanded(
             flex: 5,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                color: Color.fromARGB(255, 17, 42, 47),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    child: const Center(
-                      child: Text(
-                        '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30),
-                      ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
+                    color: Color.fromARGB(255, 17, 42, 47),
                   ),
-                  CustomTextBox(
-                    prefixIcon: const Icon(Icons.person),
-                    label: 'Username',
-                    controller: _usernameController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 120),
+                      CustomTextBox(
+                        prefixIcon: const Icon(Icons.person),
+                        label: 'Username',
+                        controller: _usernameController,
+                      ),
+                      CustomTextBox(
+                        prefixIcon: const Icon(Icons.person),
+                        label: 'Email Address',
+                        controller: _emailController,
+                      ),
+                      CustomTextBox(
+                        prefixIcon: const Icon(Icons.lock),
+                        label: 'Password',
+                        obscureText: true,
+                        controller: _passwordController,
+                      ),
+                      const SizedBox(height: 10),
+                      _buildLoginButton(),
+                    ],
                   ),
-                  CustomTextBox(
-                    prefixIcon: const Icon(Icons.person),
-                    label: 'Email Address',
-                    controller: _emailController,
-                  ),
-                  CustomTextBox(
-                    prefixIcon: const Icon(Icons.lock),
-                    label: 'Password',
-                    obscureText: true,
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 10),
-                  _buildLoginButton(),
-                ],
-              ),
+                ),
+                const Positioned(
+                    top: -130,
+                    left: 0,
+                    right: 0,
+                    child: IgnorePointer(
+                      child: Image(
+                        image: AssetImage('assets/signup_vector.png'),
+                        alignment: Alignment.center,
+                        height: 350, // Adjust the height as needed
+                      ),
+                    )),
+              ],
             ),
           )
         ],

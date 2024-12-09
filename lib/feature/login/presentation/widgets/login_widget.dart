@@ -1,4 +1,5 @@
 import 'package:encode_decode_app/core/widgets/custom_text_box.dart';
+import 'package:encode_decode_app/feature/encode/presentation/pages/cipher_selection_page.dart';
 import 'package:encode_decode_app/feature/encode/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -74,7 +75,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => const CipherSelectionPage(),
             ),
           );
         },

@@ -1,6 +1,6 @@
 import 'package:encode_decode_app/core/json_storage.dart';
 import 'package:encode_decode_app/core/widgets/custom_text_box.dart';
-import 'package:encode_decode_app/feature/encode/presentation/pages/home_page.dart';
+import 'package:encode_decode_app/feature/encode/presentation/pages/cipher_selection_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => const CipherSelectionPage(),
           ),
         );
         ScaffoldMessenger.of(context)
@@ -59,56 +59,68 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(),
       body: Column(
         children: [
-          const Expanded(
-            child: Center(
-              child: Text(
+          // Top container
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(top: 20),
+              color: Colors.transparent,
+              child: const Text(
                 'LOGIN',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
           ),
+          // Bottom container
           Expanded(
             flex: 5,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                color: Color.fromARGB(255, 17, 42, 47),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    child: const Center(
-                      child: Text(
-                        '',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30),
+            child: Stack(
+              clipBehavior: Clip.none, // Allows the image to overflow
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    color: Color.fromARGB(255, 17, 42, 47),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 120), // Space for image overlap
+                      CustomTextBox(
+                        prefixIcon: const Icon(Icons.person),
+                        label: 'Email Address',
+                        controller: _usernameController,
                       ),
+                      CustomTextBox(
+                        prefixIcon: const Icon(Icons.lock),
+                        label: 'Password',
+                        obscureText: true,
+                        controller: _passwordController,
+                      ),
+                      const SizedBox(height: 10),
+                      _buildLoginButton(),
+                    ],
+                  ),
+                ),
+                // Image overlapping top container
+                const Positioned(
+                  top: -130, // Adjust this for how much it overlaps
+                  left: 0,
+                  right: 0,
+                  child: IgnorePointer(
+                    child: Image(
+                      image: AssetImage('assets/login_vector.png'),
+                      alignment: Alignment.center,
+                      height: 350, // Adjust the height as needed
                     ),
                   ),
-                  CustomTextBox(
-                    prefixIcon: const Icon(Icons.person),
-                    label: 'Email Address',
-                    controller: _usernameController,
-                  ),
-                  CustomTextBox(
-                    prefixIcon: const Icon(Icons.lock),
-                    label: 'Password',
-                    obscureText: true,
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 10),
-                  _buildLoginButton(),
-                ],
-              ),
+                ),
+              ],
             ),
-          )
+          ),
         ],
       ),
     );

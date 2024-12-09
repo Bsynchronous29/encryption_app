@@ -1,4 +1,4 @@
-import 'package:encode_decode_app/feature/login/presentation/pages/login_page.dart';
+import 'package:encode_decode_app/feature/encode/presentation/providers/encryption_provider.dart';
 import 'package:encode_decode_app/feature/login/presentation/providers/login_provider.dart';
 import 'package:encode_decode_app/feature/main_page.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => LoginProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => EncryptionProvider()),
       ],
       child: const MaterialApp(
         home: Scaffold(
