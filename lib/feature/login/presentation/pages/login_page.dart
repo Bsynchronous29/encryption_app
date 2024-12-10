@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:encode_decode_app/core/json_storage.dart';
 import 'package:encode_decode_app/core/widgets/custom_text_box.dart';
 import 'package:encode_decode_app/feature/encode/presentation/pages/cipher_selection_page.dart';
@@ -11,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool showPassword = false;
   bool isLoginOption = true;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -23,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       if (email.isEmpty || password.isEmpty) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Invalid email or password')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email or password')));
         return;
       }
 
@@ -35,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               user['username'].toString() == email) &&
           user['password'].toString() == password);
 
-      if (user != null) {
+      if (user.isNotEmpty) {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -43,10 +46,10 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Login Successful')));
+            .showSnackBar(const SnackBar(content: Text('Login Successful')));
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Invalid email or password')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email or password')));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
@@ -63,8 +66,8 @@ class _LoginPageState extends State<LoginPage> {
           // Top container
           Expanded(
             child: Container(
+              constraints: const BoxConstraints(minHeight: 100),
               margin: const EdgeInsets.only(top: 20),
-              color: Colors.transparent,
               child: const Text(
                 'LOGIN',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
@@ -73,11 +76,12 @@ class _LoginPageState extends State<LoginPage> {
           ),
           // Bottom container
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Stack(
               clipBehavior: Clip.none, // Allows the image to overflow
               children: [
                 Container(
+                  constraints: const BoxConstraints(maxHeight: 645),
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -98,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                       CustomTextBox(
                         prefixIcon: const Icon(Icons.lock),
                         label: 'Password',
+                        isPassword: true,
                         obscureText: true,
                         controller: _passwordController,
                       ),

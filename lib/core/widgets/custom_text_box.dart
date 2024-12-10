@@ -2,20 +2,22 @@
 
 import 'package:flutter/material.dart';
 
-class CustomTextBox extends StatelessWidget {
+class CustomTextBox extends StatefulWidget {
   CustomTextBox({
     super.key,
     required this.label,
-    this.obscureText = false,
+    this.initialValue,
     this.controller,
-    this.prefixIcon,
+    this.readOnly = false,
     this.maxLines = 1,
     this.minLines = 1,
-    this.readOnly = false,
     this.labelStyle,
-    this.initialValue,
+    this.prefixIcon,
+    this.obscureText = false,
+    this.isPassword = false,
   });
 
+  bool isPassword;
   String? initialValue;
   Widget? prefixIcon;
   String label;
@@ -27,6 +29,11 @@ class CustomTextBox extends StatelessWidget {
   TextStyle? labelStyle;
 
   @override
+  State<CustomTextBox> createState() => _CustomTextBoxState();
+}
+
+class _CustomTextBoxState extends State<CustomTextBox> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(5),
@@ -36,28 +43,41 @@ class CustomTextBox extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(left: 10),
             child: Text(
-              label,
-              style: labelStyle ??
+              widget.label,
+              style: widget.labelStyle ??
                   const TextStyle(
                     color: Colors.white,
                   ),
             ),
           ),
           TextFormField(
-            initialValue: initialValue,
-            readOnly: readOnly,
-            controller: controller,
-            obscureText: obscureText,
-            minLines: minLines,
-            maxLines: maxLines,
+            initialValue: widget.initialValue,
+            readOnly: widget.readOnly,
+            controller: widget.controller,
+            obscureText: widget.obscureText,
+            minLines: widget.minLines,
+            maxLines: widget.maxLines,
             decoration: InputDecoration(
-              prefixIcon: prefixIcon,
-              hintText: label,
+              prefixIcon: widget.prefixIcon,
+              suffixIcon: !widget.isPassword
+                  ? null
+                  : IconButton(
+                      tooltip: widget.obscureText
+                          ? 'Show Password'
+                          : 'Hide Password',
+                      onPressed: () {
+                        setState(() {
+                          widget.obscureText = !widget.obscureText;
+                        });
+                      },
+                      icon: !widget.obscureText
+                          ? const Icon(Icons.remove_red_eye_outlined)
+                          : const Icon(Icons.remove_red_eye)),
+              hintText: widget.label,
               filled: true,
               fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
             ),
           ),
         ],

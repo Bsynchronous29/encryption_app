@@ -61,20 +61,23 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(),
       body: Column(
         children: [
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Create an Acount',
+          Expanded(
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 100),
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text(
+                'Create an Account',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Stack(
               clipBehavior: Clip.none,
               children: [
                 Container(
+                  constraints: const BoxConstraints(maxHeight: 585),
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
