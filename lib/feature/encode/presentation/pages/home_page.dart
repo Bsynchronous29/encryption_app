@@ -83,22 +83,21 @@ class _HomePageState extends State<HomePage> {
                           },
                           child: const Text('ENCRYPT')),
                     ),
-                    if (_selectedCipher != Cipher.atbash)
-                      Container(
-                        width: 200,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(
-                                  Color.fromARGB(255, 36, 82, 92),
-                                ),
-                                foregroundColor:
-                                    WidgetStatePropertyAll(Colors.white)),
-                            onPressed: () {
-                              _selectedEncryption = Encryption.decrypt;
-                              _convert();
-                            },
-                            child: const Text('DECRYPT')),
-                      ),
+                    Container(
+                      width: 200,
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                Color.fromARGB(255, 36, 82, 92),
+                              ),
+                              foregroundColor:
+                                  WidgetStatePropertyAll(Colors.white)),
+                          onPressed: () {
+                            _selectedEncryption = Encryption.decrypt;
+                            _convert();
+                          },
+                          child: const Text('DECRYPT')),
+                    ),
                   ],
                 ),
               ),

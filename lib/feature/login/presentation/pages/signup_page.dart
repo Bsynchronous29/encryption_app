@@ -86,8 +86,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     color: Color.fromARGB(255, 17, 42, 47),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: ListView(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 120),
                       CustomTextBox(
@@ -102,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       CustomTextBox(
                         prefixIcon: const Icon(Icons.lock),
+                        isPassword: true,
                         label: 'Password',
                         obscureText: true,
                         controller: _passwordController,

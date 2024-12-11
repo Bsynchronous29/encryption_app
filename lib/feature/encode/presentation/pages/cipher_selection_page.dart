@@ -2,7 +2,6 @@ import 'package:encode_decode_app/core/enums.dart';
 import 'package:encode_decode_app/feature/encode/presentation/pages/home_page.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CipherSelectionPage extends StatelessWidget {
   const CipherSelectionPage({super.key});
@@ -22,20 +21,23 @@ class CipherSelectionPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: ListView(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildHeader(),
-                    _buildButton(context, text: const Text('ATBASH'),
-                        onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(
-                            cipher: Cipher.atbash,
+                    _buildButton(
+                      context,
+                      text: const Text('ATBASH'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(
+                              cipher: Cipher.atbash,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                     _buildButton(context, text: const Text('CEASAR'),
                         onPressed: () {
                       Navigator.of(context).push(

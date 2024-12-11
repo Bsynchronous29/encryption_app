@@ -90,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     color: Color.fromARGB(255, 17, 42, 47),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: ListView(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 120), // Space for image overlap
                       CustomTextBox(
